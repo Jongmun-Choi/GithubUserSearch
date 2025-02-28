@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -18,14 +20,35 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+            isShrinkResources = false
+            isMinifyEnabled = false
+
+            buildConfigField("String", "SERVER_URL", "\"https://m.user-api-gw.dev.miraoto.jp\"")
+
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "SERVER_URL", "\"https://m.user-api-gw.dev.miraoto.jp\"")
+
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+        dataBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -44,4 +67,18 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // retrofit2
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // moshi
+    implementation(libs.moshi.converter)
+    ksp(libs.moshi.kotlin.codegen)
+
+    // di - hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
 }
