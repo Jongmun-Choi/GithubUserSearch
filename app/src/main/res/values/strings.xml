@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">GithubSearch</string>
-    <string name="client_id">Ov23lic4V0Q63ZTvg1j4</string>
-    <string name="client_secrets">8310b2ef65d919da55704a87b32681fe2952fe9b</string>
+    <string name="login_btn_txt">Github 로그인</string>
 </resources>

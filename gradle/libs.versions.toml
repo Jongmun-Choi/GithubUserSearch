@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.2"
+browser = "1.8.0"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -15,6 +16,7 @@ moshiVersion = "1.15.2"
 moshiConvertor = "2.11.0"
 hiltAndroid = "2.53.1"
 [libraries]
+androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

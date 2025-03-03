@@ -2,6 +2,8 @@ package com.dave.github.retrofit
 
 
 import com.dave.github.BuildConfig
+import com.dave.github.repository.ApiRepository
+import com.dave.github.repository.AuthRepository
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -13,18 +15,31 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private val resultFactory = ResultFactory()
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class typeAccess
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class typeApi
 
     @Provides
-    @Singleton
-    fun provideInterceptor(): Interceptor {
-        return Interceptor { chain ->
+    fun provideGithubUrl() = BuildConfig.ACCESS_URL
+
+    @Provides
+    fun provideGithubApiUrl() = BuildConfig.API_URL
+
+    private val resultFactory = ResultFactory()
+
+    private val interceptor =
+        Interceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
             val token = ""
             if (token.isNotEmpty()) {
@@ -33,11 +48,54 @@ object ApiModule {
             }
             chain.proceed(requestBuilder.build())
         }
-    }
+
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(interceptor: Interceptor) =
+    @typeAccess
+    fun provideAccessOkHttpClient() =
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            OkHttpClient.Builder()
+                .connectTimeout(150, TimeUnit.SECONDS)
+                .readTimeout(150, TimeUnit.SECONDS).writeTimeout(150, TimeUnit.SECONDS)
+                .addInterceptor(loggingInterceptor).addInterceptor(interceptor).build()
+        } else {
+            OkHttpClient.Builder().connectTimeout(150, TimeUnit.SECONDS)
+                .readTimeout(150, TimeUnit.SECONDS).writeTimeout(150, TimeUnit.SECONDS)
+                .addInterceptor(interceptor).build()
+        }
+
+
+
+    @Singleton
+    @Provides
+    @typeAccess
+    fun provideAccessRetrofit(@typeAccess okHttpClient: OkHttpClient): Retrofit {
+        val moshi = Moshi.Builder().build()
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(resultFactory)
+            .baseUrl(provideGithubUrl())
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    @typeAccess
+    fun provideAccessService(@typeAccess retrofit: Retrofit): AccessService = retrofit.create(AccessService::class.java)
+
+    @Singleton
+    @Provides
+    @typeAccess
+    fun provideAccessRepository(@typeAccess accessService: AccessService)= AuthRepository(accessService)
+
+    @Provides
+    @Singleton
+    @typeApi
+    fun provideApiOkHttpClient() =
         if (BuildConfig.DEBUG) {
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -53,21 +111,26 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    @typeApi
+    fun provideApiRetrofit(@typeApi okHttpClient: OkHttpClient): Retrofit {
         val moshi = Moshi.Builder().build()
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(resultFactory)
-            .baseUrl(BuildConfig.SERVER_URL)
+            .baseUrl(provideGithubApiUrl())
             .client(okHttpClient)
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    @typeApi
+    fun provideApiService(@typeApi retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
-
+    @Singleton
+    @Provides
+    @typeApi
+    fun provideApiRepository(@typeApi apiService: ApiService)= ApiRepository(apiService)
 
 }
 
