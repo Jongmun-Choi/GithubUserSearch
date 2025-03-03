@@ -27,8 +27,10 @@ android {
             isShrinkResources = false
             isMinifyEnabled = false
 
-            buildConfigField("String", "SERVER_URL", "\"https://m.user-api-gw.dev.miraoto.jp\"")
-
+            buildConfigField("String", "ACCESS_URL", "\"https://github.com\"")
+            buildConfigField("String", "API_URL", "\"https://api.github.com\"")
+            buildConfigField("String","clientId", "\"Ov23lic4V0Q63ZTvg1j4\"")
+            buildConfigField("String", "clientSecret", "\"8310b2ef65d919da55704a87b32681fe2952fe9b\"")
         }
 
         release {
@@ -68,6 +70,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Component
+    implementation(libs.androidx.constraintlayout)
+
     // retrofit2
     implementation(libs.retrofit)
     implementation(libs.okhttp)
@@ -80,5 +85,5 @@ dependencies {
     // di - hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
+    implementation(libs.androidx.browser)
 }

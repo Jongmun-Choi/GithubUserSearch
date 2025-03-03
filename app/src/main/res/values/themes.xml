@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.GithubSearch" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.GithubSearch.Kotlin" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+    </style>
+
 </resources>
