@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         >
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.login.LoginActivity"
             android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
@@ -37,6 +37,10 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".view.search.SearchUserActivity"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
