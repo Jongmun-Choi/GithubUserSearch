@@ -4,6 +4,7 @@ package com.dave.github.retrofit
 import com.dave.github.BuildConfig
 import com.dave.github.repository.ApiRepository
 import com.dave.github.repository.AuthRepository
+import com.dave.github.util.EncryptedSharedPreferencesHelper
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -41,8 +42,8 @@ object ApiModule {
     private val interceptor =
         Interceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
-            val token = ""
-            if (token.isNotEmpty()) {
+            val token = EncryptedSharedPreferencesHelper.getToken()
+            if (!token.isNullOrEmpty()) {
                 val bearText = "Bearer $token"
                 requestBuilder.addHeader("Authorization", bearText)
             }

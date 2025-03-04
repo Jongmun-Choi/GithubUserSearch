@@ -38,7 +38,7 @@
 
         </activity>
 
-        <activity android:name=".view.search.SearchUserActivity"
+        <activity android:name=".view.search.UserSearchActivity"
             android:exported="true"/>
 
     </application>

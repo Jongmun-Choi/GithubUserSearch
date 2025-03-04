@@ -2,8 +2,10 @@ package com.dave.github.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
+import androidx.security.crypto.EncryptedSharedPreferences
 import com.dave.github.BuildConfig
 import com.dave.github.repository.AuthRepository
+import com.dave.github.util.EncryptedSharedPreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,8 +28,8 @@ class LoginViewModel @Inject constructor(application:Application, private val re
             try {
                 repository.getAccessToken(BuildConfig.clientId, BuildConfig.clientSecret, code)
                     .onSuccess {
-                        System.out.println("accessToken = ${it.accessToken}")
                         _login.emit(true)
+                        EncryptedSharedPreferencesHelper.setToken(it)
                     }
                     .onFailure {
                         _login.emit(false)

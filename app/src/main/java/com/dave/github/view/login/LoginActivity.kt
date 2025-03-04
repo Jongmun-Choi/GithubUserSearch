@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.dave.github.BuildConfig
 import com.dave.github.R
 import com.dave.github.databinding.LoginActivityBinding
+import com.dave.github.view.search.UserSearchActivity
 import com.dave.github.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,12 +25,17 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.login_activity)
+        initFlow()
     }
 
     fun initFlow() {
        lifecycleScope.launch {
             viewModel.login.collect() { loginSuccess ->
                 //handle login success
+                if (loginSuccess) {
+                    startActivity(Intent(this@LoginActivity, UserSearchActivity::class.java))
+                    finish()
+                }
             }
         }
 
