@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr format="boolean" name="isParentBackground"/>
+    <attr format="boolean" name="isUseBackground"/>
+    <attr format="integer" name="itemHeightPlus"/>
+    <attr format="boolean" name="alwaysUseClear"/>
+    <attr format="boolean" name="isErrorBackground"/>
+    <attr format="boolean" name="isRemoveBlank"/>
+
+    <declare-styleable name="FocusEditText">
+        <attr name="isParentBackground"/>
+        <attr name="isUseBackground"/>
+        <attr name="alwaysUseClear"/>
+        <attr name="isErrorBackground"/>
+        <attr name="isRemoveBlank"/>
+    </declare-styleable>
+
+</resources>

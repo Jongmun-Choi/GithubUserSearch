@@ -1,4 +1,4 @@
-package com.dave.github
+package com.dave.github.view.login
 
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.dave.github.BuildConfig
+import com.dave.github.R
 import com.dave.github.databinding.LoginActivityBinding
 import com.dave.github.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
