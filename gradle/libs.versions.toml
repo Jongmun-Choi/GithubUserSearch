@@ -17,6 +17,7 @@ moshiConvertor = "2.11.0"
 hiltAndroid = "2.53.1"
 recyclerview = "1.4.0"
 cardview = "1.0.0"
+securityCryptoKtx = "1.1.0-alpha06"
 
 [libraries]
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
@@ -28,8 +29,7 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-
+androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx", version.ref = "securityCryptoKtx" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 

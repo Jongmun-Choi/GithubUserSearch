@@ -31,6 +31,7 @@ android {
             buildConfigField("String", "API_URL", "\"https://api.github.com\"")
             buildConfigField("String","clientId", "\"Ov23lic4V0Q63ZTvg1j4\"")
             buildConfigField("String", "clientSecret", "\"8310b2ef65d919da55704a87b32681fe2952fe9b\"")
+            buildConfigField("String", "Shared_Preference_Name", "\"TokenInfo\"")
         }
 
         release {
@@ -66,12 +67,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.material3)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.cardview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // EncryptedSharedPreferences
+    implementation(libs.androidx.security.crypto.ktx)
 
     //Component
     implementation(libs.androidx.constraintlayout)
