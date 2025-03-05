@@ -2,6 +2,7 @@ package com.dave.github.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.util.Objects
 
 @JsonClass(generateAdapter = true)
 data class User(
@@ -14,4 +15,13 @@ data class User(
     val avatarUrl : String,
     @field:Json(name = "html_url")
     val repoUrl : String
-)
+) {
+
+    override fun equals(other: Any?): Boolean {
+        return other is User && other.id == id && other.name == name && other.avatarUrl == avatarUrl && other.repoUrl == repoUrl
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id, name, avatarUrl, repoUrl)
+    }
+}
