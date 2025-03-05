@@ -4,6 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="user"
+            type="com.dave.github.model.User" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@color/black"
+                android:text="@{user.name}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
@@ -49,6 +56,7 @@
                 android:textSize="13sp"
                 android:textColor="@color/grey"
                 android:layout_marginTop="6dp"
+                android:text="@{user.repoUrl}"
                 app:layout_constraintTop_toBottomOf="@id/tvUserName"
                 app:layout_constraintStart_toStartOf="parent"/>
 
